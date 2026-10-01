@@ -1,5 +1,30 @@
 # Changelog
 
+## v3.12.0 · 逻辑去重与物理保留（2026-10-01）
+
+1. 正式检索口径统一为 116 个唯一参考：58 个本地真实品牌/产品参考 + 58 个 VibeUI 独有通用风格/结构参考。
+2. VibeUI 的 112 条物理镜像、166 个预览和 473 个文件继续完整保留；其中 54 个与本地 58 站重叠的设计及 108 个预览只作视觉补充，不重复计数。
+3. VibeUI 索引和镜像 README 新增 `referenceCatalog`、`referenceClass`、`countsAsUniqueReference` 和“逻辑去重、物理保留”说明，避免把物理条目数误当成正式参考数。
+4. `preflight`、`SKILL.md`、设计系统目录、README、Skill IR 和回归测试同步检查 116 / 58 / 58 / 54 / 108 / 112 / 166 / 473 的口径一致性。
+
+## v3.11.0 · 六方向试衣间与规则冲突治理（2026-10-01）
+
+1. Phase 2 从四方向升级为固定 A–F 六方向真实 mini mockup；桌面统一 `3×2`、移动端单列，键盘与确认协议同步为 `1–6`。
+2. 新增设计路径决策树：开放设计、已有品牌/成熟系统、单一非像素参考、像素复刻和“直接做/你定”分别处理；推荐态仍不是用户授权。
+3. 外援规则改为严格区分角色：只有本地 58 站品牌/产品库可称“品牌 DNA 供体/DNA 注入”，VibeUI 112 条离线图谱只作通用风格/结构参考，不得称为品牌 DNA；成熟系统、法规或原创性要求允许不选外援但必须说明理由。
+4. 建设计系统时补齐 token 层、组件契约、主题、版本与治理要求；推荐评分固定为任务契合、三秒理解、品牌一致、辨识度、无障碍、实现风险、参考契合七维。
+5. 字体门禁不再一概禁止系统字体；中文正文/UI、企业组件、无障碍优先和系统 UI 可使用系统字体，只有拉丁展示/品牌排版需要避开 Inter、Roboto、Arial 的偷懒默认。
+6. 偏好账本新增 Always Apply 摘要、领域规则和历史上/已废止档案，固定冲突顺序为“当前要求与项目事实 > 最新生效规则 > 领域规则 > 通用建议”；P-37 退役，P-48 接管六方向要求。
+7. 同步 SKILL、风格预览、preflight、预览服务、manifest、Skill IR、README、trigger eval 与回归测试；现有 VibeUI 离线镜像和 58 个本地真实品牌/产品设计系统保持可用。
+
+## v3.10.0 · VibeUI 完整离线镜像（2026-10-01）
+
+1. 新增 `scripts/qiaomu-vibeui-sync.mjs`，把 VibeUI 的 112 个 `DESIGN.md`、166 个明暗预览、Tailwind、Google Fonts 样式表和字体文件完整镜像到 `references/vibeui-mirror/`，共 473 个文件、约 21.47 MiB。
+2. 新增格式版本 2 的 `references/vibeui-design-index.md` 与 `references/vibeui-design-index.json`：保留 54 个现有本地 `DESIGN.md` 的第一优先级，同时让 58 个扩展风格、落地页模板和仪表盘模板全部拥有仓库内入口。
+3. 预览 HTML 中的 Tailwind、Google Fonts 和字体 URL 已改写为相对路径；VibeUI 关站后，设计检索、文档读取和本地预览仍可使用。
+4. `--check` 改为纯离线校验，逐文件检查路径、尺寸、SHA-256、清单覆盖和外部运行时残留；只有主动运行 `--check-upstream` 才访问上游检查更新。
+5. VibeUI 只接入 UI 设计区，不收录 Skill、图片生成、ChatGPT、Grok、Seedance 等非 UI 内容，并保留来源、非品牌背书说明及 `VoltAgent/awesome-design-md`、`nextlevelbuilder/ui-ux-pro-max-skill` 的 MIT 许可声明。
+
 ## v3.9.0 · 创意提示词编排与生产发布（2026-09-04）
 
 1. 新增 `references/evolution-protocol.md`，把自进化定义为 `observed → proposed → accepted → published → retired` 状态机，明确证据、冲突、发布和回滚规则。

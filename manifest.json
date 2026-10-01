@@ -1,8 +1,8 @@
 {
   "name": "qiaomu-design",
-  "version": "3.9.0",
+  "version": "3.12.0",
   "owner": "Qiaomu",
-  "updated_at": "2026-09-04",
+  "updated_at": "2026-10-01",
   "status": "active",
   "maturity_tier": "governed",
   "lifecycle_stage": "library",
@@ -21,7 +21,7 @@
     "agent-skills-compatible"
   ],
   "intent": {
-    "job_to_be_done": "把界面设计从场景诊断、四方向可视化选择推进到真实实现和浏览器验收。",
+    "job_to_be_done": "把界面设计从场景诊断、A–F 六方向可视化选择推进到真实实现和浏览器验收。",
     "target_users": [
       "需要设计或重设计网页、组件和产品界面的创作者与开发者",
       "需要审查、打磨或建立设计系统的产品团队"
@@ -34,7 +34,7 @@
     ],
     "outputs": [
       "设计读取、三拨盘和功能契约",
-      "四方向可交互预览页",
+      "A–F 六方向可交互预览页",
       "项目级 DESIGN.md",
       "真实界面代码与桌面/移动端验收证据"
     ],

@@ -223,7 +223,7 @@ const bridgeScript = `
         <span class="qmdp-frame-title"><strong>设计方向预览</strong></span>
       </div>
       <div class="qmdp-frame-right" aria-label="选择快捷键">
-        <span class="qmdp-key">1 A</span><span class="qmdp-key">2 B</span><span class="qmdp-key">3 C</span><span class="qmdp-key">4 D</span>
+        <span class="qmdp-key">1 A</span><span class="qmdp-key">2 B</span><span class="qmdp-key">3 C</span><span class="qmdp-key">4 D</span><span class="qmdp-key">5 E</span><span class="qmdp-key">6 F</span>
       </div>\`;
     const dials = document.createElement('div');
     dials.className = 'qmdp-dials';
@@ -400,7 +400,7 @@ const bridgeScript = `
   window.addEventListener('qiaomu-design-select', event => openConfirmFromPayload(event.detail || {}));
 
   function optionPayload(el, source, fallbackIndex = -1) {
-    const fallbackId = fallbackIndex >= 0 ? 'ABCD'[fallbackIndex] : '';
+    const fallbackId = fallbackIndex >= 0 ? 'ABCDEF'[fallbackIndex] : '';
     const id = el.dataset.designOption || el.dataset.option || el.dataset.choice || el.dataset.direction || el.dataset.id || el.dataset.key || fallbackId || '';
     const name = el.dataset.name || el.querySelector('[data-direction-name]')?.textContent?.trim() || el.querySelector('h2,h3,strong')?.textContent?.trim() || '';
     return {id, name, label: id && name ? id + ': ' + name : id || name, source};
@@ -409,7 +409,7 @@ const bridgeScript = `
   function ensureOptionButtons() {
     ensureShell();
     const cards = Array.from(document.querySelectorAll(optionSelector)).filter(el => !el.closest('.qmdp-frame'));
-    cards.slice(0, 8).forEach((el, index) => {
+    cards.slice(0, 6).forEach((el, index) => {
       if (el.querySelector('.qmdp-pick-button')) return;
       const payload = optionPayload(el, 'button', index);
       const button = document.createElement('button');
@@ -454,7 +454,7 @@ const bridgeScript = `
     }
     if (event.target.closest('input,textarea,select,[contenteditable="true"]')) return;
     if (document.querySelector('.qmdp-confirm.open')) return;
-    const index = ['1', '2', '3', '4'].indexOf(event.key);
+    const index = ['1', '2', '3', '4', '5', '6'].indexOf(event.key);
     if (index < 0) return;
     const cards = document.querySelectorAll(optionSelector);
     const el = cards[index];

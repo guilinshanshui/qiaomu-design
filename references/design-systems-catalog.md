@@ -1,6 +1,10 @@
 # 设计系统参考库 — 58 个真实网站的 DESIGN.md
 
 > 基于 [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)，遵循 [Google Stitch DESIGN.md 格式](https://stitch.withgoogle.com/docs/design-md/format/)。
+>
+> 本文件只索引仓库内置的 58 站真实品牌/产品 `DESIGN.md`。正式检索口径为 116 个唯一参考：58 个本地真实品牌/产品参考 + 58 个 VibeUI 独有通用风格/结构参考。VibeUI 另有 54 个设计与本地重叠及 108 个预览，继续离线保留但只作视觉补充，不重复计数。
+>
+> 当本地命中时优先读取本地文件；需要极简、玻璃拟态、Bento、落地页版式、通用仪表盘等扩展方向时，先用 [`vibeui-design-index.md`](./vibeui-design-index.md) 选出 1–2 个风格/结构参考，再打开仓库内镜像的 `DESIGN.md` 与预览核对；不要把 VibeUI 模板称为品牌 DNA 供体。
 
 ## 快速查找
 

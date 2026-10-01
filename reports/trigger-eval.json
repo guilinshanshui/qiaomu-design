@@ -19,7 +19,7 @@
   "results": {
     "should_trigger": [
       {
-        "prompt": "帮我重新设计这个产品首页，先给四个能直接看的方向",
+        "prompt": "帮我重新设计这个产品首页，先给六个能直接看的方向",
         "family": "cn_redesign_preview",
         "expected_trigger": true,
         "predicted_trigger": true,
@@ -87,7 +87,7 @@
         "negative_pattern": null
       },
       {
-        "prompt": "Redesign this dashboard UI and show me four distinct visual directions before implementation.",
+        "prompt": "Redesign this dashboard UI and show me six distinct visual directions before implementation.",
         "family": "en_dashboard_preview",
         "expected_trigger": true,
         "predicted_trigger": true,

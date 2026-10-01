@@ -62,7 +62,7 @@
   ],
   "should_trigger": [
     {
-      "text": "帮我重新设计这个产品首页，先给四个能直接看的方向",
+      "text": "帮我重新设计这个产品首页，先给六个能直接看的方向",
       "family": "cn_redesign_preview"
     },
     {
@@ -82,7 +82,7 @@
       "family": "cn_design_system"
     },
     {
-      "text": "Redesign this dashboard UI and show me four distinct visual directions before implementation.",
+      "text": "Redesign this dashboard UI and show me six distinct visual directions before implementation.",
       "family": "en_dashboard_preview"
     },
     {

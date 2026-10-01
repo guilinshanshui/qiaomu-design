@@ -8,9 +8,9 @@
 - Phase 2 输出方案时（凡是涉及视觉方向的任务）
 - 用户说"给我几个风格/方向看看"
 - 重设计任务在动手前
-- 用户追问"为什么没给预览"、"给我看预览"、"不是要四个方向吗"或同义表达时，立即补交四方向预览页，不再只解释流程
+- 用户追问"为什么没给预览"、"给我看预览"、"不是要六个方向吗"或同义表达时，立即补交六方向预览页，不再只解释流程
 
-不适用：纯代码审查、纯交互逻辑优化、用户已指定唯一明确参考（如"完全照 Linear 做"）。
+不适用：纯代码审查、纯交互逻辑优化、用户已指定唯一明确参考并要求像素复刻（如"完全照 Linear 做，不要变"）。
 
 ## 产物要求
 
@@ -45,7 +45,7 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 
 预览页的 demo 可以有不同视觉风格，但**选择外壳必须稳定一致**，避免用户每次重新理解：
 
-- 顶部固定中性工具条：任务名 / 回传状态 / 快捷键 1-4。按钮已有明确文案时，顶部不再重复
+- 顶部固定中性工具条：任务名 / 回传状态 / 快捷键 1-6。按钮已有明确文案时，顶部不再重复
   "点按钮选择"之类小字说明
 - 用一句低干扰文案说明：这是**设计方向样机**，用于选择视觉与交互气质，**不是最终 App /
   最终页面**；点选方向后才进入正式实现。不要把免责声明、教程或系统说明堆在首屏
@@ -57,7 +57,7 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 - 按钮上方如果保留方向短说明，必须是 full-width 横排 meta block，桌面实际宽度 ≥
   240px / 18em，最多两行；不要放进 side rail、metric column、grid auto column 或
   mockup 内部窄栏里。长解释一律移到方向说明区
-- 点选方向或按键 1-4 后，先打开确认弹层；弹层显示方向名、当前三拨盘值，并提供一个输入框
+- 点选方向或按键 1-6 后，先打开确认弹层；弹层显示方向名、当前三拨盘值，并提供一个输入框
   让用户写调整建议。只有点击"确认并回传"才写入 `selection.json`
 - 选中确认后卡片有统一高亮状态，底部 toast 显示"已回传"
 - 本地服务会自动注入这层外壳；生成的 HTML 也应主动包含等价结构，不能只靠点卡片隐式选择。
@@ -73,36 +73,35 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 
 多个方向不能由同一套默认样式连续换皮。默认流程：
 
-1. 给 A/B/C/D 分别写互斥 brief：目标用户、功能契约、视觉轴、布局轴、密度轴、禁止项
+1. 给 A–F 分别写互斥 brief：目标用户、功能契约、视觉轴、布局轴、密度轴、禁止项
 2. 能调用 subagent 时，每个 subagent 只负责一个方向；不能修改共享预览壳，不能引用其它方向样式
 3. 每个方向使用独立 stage 和 scoped CSS：类名前缀如 `.dir-a` / `.sa-a`，不得写全局
    `button`、`.card`、`body` 等会污染其它方向的选择器
-4. 主流程只做统一壳、选择回传、推荐理由和横向对比；整合后检查 4 个方向遮住颜色仍能区分
+4. 主流程只做统一壳、选择回传、推荐理由和横向对比；整合后检查 6 个方向遮住颜色仍能区分
 5. 如果无法使用 subagent，仍按独立 brief 逐个生成，并在回复里说明"本次使用单 agent 隔离 brief 降级"
 
-**数量底线**：A/B/C/D 四方向是硬下限，不是建议值。除非用户明确指定唯一方向并要求直接执行，
-否则任何视觉方向选择任务都不得只给 2 个或 3 个方向；文字版 A/B/C 策略说明不能替代四方向
+**数量底线**：A–F 六方向是硬下限，不是建议值。除非用户明确指定唯一方向并要求直接执行，
+否则任何视觉方向选择任务都不得只给 2–5 个方向；文字版 A–C 策略说明不能替代六方向
 真实 mockup。
 
 ### 页面结构
 
-1. **顶部状态条**：任务名 + "方向样机，不是最终 App / 最终页面" + 快捷键提示（1-4）+
+1. **顶部状态条**：任务名 + "方向样机，不是最终 App / 最终页面" + 快捷键提示（1-6）+
    回传状态；不重复按钮已有的选择说明；不放倒计时
-2. **设计样机区 × 4**（固定 A/B/C/D，每个带互斥约束，其中一个标注「推荐」徽标），
-   桌面默认使用 2×2 左右两栏网格，移动端收敛为单列；只有方向本身明确需要全宽沉浸带时，
-   才允许改成单列全宽展示，并在验收说明里写清原因。每个样机块包含：
+2. **设计样机区 × 6**（固定 A–F，每个带互斥约束，其中一个标注「推荐」徽标），
+   桌面固定使用 3×2 网格，移动端收敛为单列；Phase 2 不得改成全宽单列或全宽沉浸带。每个样机块包含：
    - **真实迷你 mockup**（核心）：用该方向的真字体、真配色、真布局做一个
-     Hero 级别的缩尺片段（约 480×300 逻辑尺寸，`transform: scale` 适配卡宽）。
+     Hero 级别的缩尺片段（约 400×280 逻辑尺寸，`transform: scale` 适配卡宽）。
      必须是真的排版，**不是色板色块 + 字体名列表**——用户要看的是"做出来长什么样"
    - mockup 必须嵌在同一个 `index.html` 的独立 stage / iframe-like 容器中，
-     4 个方向同屏可比较；不允许散落成 4 个难找的文件
+     6 个方向同屏可比较；不允许散落成 6 个难找的文件
    - mockup 舞台必须填满留给它的空间；比例不匹配时居中展示，不允许出现大片无意义空白
    - 方向卡片内也应以低干扰方式标注"方向样机"，确保截图单独传播时不会被误解为最终成品
    - 窄屏下不能让 mockup 内部控件和文字互相挤压；复杂桌面/控台方向使用内部缩放舞台、
      移动端专用构图或明确可控裁切，截图检查必须覆盖移动端
    - 只保留方向名、极短标签和选择按钮；不要把长解释混在样机卡里
    - 按钮上方短说明若存在，必须占满卡片宽度横排展示；禁止一字一行、竖排或与按钮重叠
-   - **明显的「选择 A/B/C/D · 方向名」按钮**，按钮位置、样式、交互在所有方向一致
+   - **明显的「选择 A–F · 方向名」按钮**，按钮位置、样式、交互在所有方向一致
      且独立成行，不得 absolute/fixed 覆盖说明文字
    - 每个方向只能有一组选择按钮；运行本地回传服务后也不得出现重复按钮
 3. **方向说明区**：在样机区之外单独放说明，可以是右侧栏、下方说明卡、抽屉或 tabs；
@@ -110,13 +109,13 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
    说明区可以密一点，但不能挤压或打断样机比较
 4. **三拨盘控制区**：在样机区附近放三个滑块：
    `视觉冒险度`、`动效强度`、`信息密度`，范围 1-10，当前数值可见；滑块变化不立即回传
-5. **确认弹层**：点击方向按钮、方向卡或按 1/2/3/4 后，只打开确认弹层，不直接回传。
+5. **确认弹层**：点击方向按钮、方向卡或按 1/2/3/4/5/6 后，只打开确认弹层，不直接回传。
    弹层包含方向名、当前三拨盘值、一个可选调整建议输入框、`取消`、`确认并回传`。
    点击确认后才调用 `sendSelection(...)` 向 `POST /api/select` 回传
    `{id,label,name,notes,dials,adjustments}`。如果运行在 `file://` 静态模式，则降级为剪贴板复制
    `选 X：〈方向名〉；拨盘：...；建议：...` 并提示用户回到对话发送
 6. **选中反馈**：确认后卡片高亮 + 底部浮条显示"已选择方向 X，已回传"
-7. **备选交互**：支持键盘 1/2/3/4 选择；说明区注明"也可以只选中意某个细节，
+7. **备选交互**：支持键盘 1–6 选择；说明区注明"也可以只选中意某个细节，
    在对话里告诉我（如：要 A 的配色 + B 的字体）"
 8. **禁止自动推进**：预览页不允许 60 秒倒计时、超时默认选择或自动回传。推荐方向只是建议，
    必须用户确认或在对话中明确授权才进入正式实现
@@ -141,7 +140,7 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 2. `POST /api/select` 接收 `{id,label,name,notes,dials,adjustments}`，写入同目录 `selection.json`
 3. 服务终端打印 `QIAOMU_DESIGN_SELECTION::{...}`，供调用方读取或监听
 4. `GET /api/selection` 返回最新选择，便于调用方恢复状态
-5. 页面选择按钮、卡片点击、键盘 1-4 都先打开确认弹层；弹层确认后才调用 `sendSelection(...)`
+5. 页面选择按钮、卡片点击、键盘 1–6 都先打开确认弹层；弹层确认后才调用 `sendSelection(...)`
 6. 执行代理启动预览后必须保持监听，不得发送 final 结束回合；推荐同时运行：
    `node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-watch-selection.mjs --selection design-previews/YYYY-MM-DD-任务名/selection.json`
    watcher 默认使用文件事件，75ms 短轮询仅作兜底；不要再用 1s 轮询作为默认路径
@@ -177,7 +176,7 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
   .bar{padding:20px 32px;border-bottom:1px solid #ddd;display:flex;justify-content:space-between}
   .dials{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:12px;padding:20px 32px;border-bottom:1px solid #ddd}
   .dial{display:grid;gap:6px;font-size:13px}.dial b{font-weight:650}.dial output{font-variant-numeric:tabular-nums}
-  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;padding:32px}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:32px}
   .card{background:#fff;border:2px solid #e2e2e0;border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;min-width:0}
   .card.selected{border-color:#1a1a1a}
   .mock{height:300px;overflow:hidden;position:relative;display:grid;place-items:center}
@@ -201,13 +200,13 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 </head>
 <body>
   <div class="bar"><strong>{任务名} · 方向样机</strong>
-    <span>键盘 1-4 选择 · 确认后回传</span></div>
+    <span>键盘 1-6 选择 · 确认后回传</span></div>
   <div class="dials" data-qmdp-dials aria-label="设计拨盘">
     <label class="dial"><b>视觉冒险度 <output id="varianceOut" data-qmdp-output="variance">7</output></b><input id="variance" data-qmdp-dial="variance" type="range" min="1" max="10" value="7"></label>
     <label class="dial"><b>动效强度 <output id="motionOut" data-qmdp-output="motion">6</output></b><input id="motion" data-qmdp-dial="motion" type="range" min="1" max="10" value="6"></label>
     <label class="dial"><b>信息密度 <output id="densityOut" data-qmdp-output="density">4</output></b><input id="density" data-qmdp-dial="density" type="range" min="1" max="10" value="4"></label>
   </div>
-  <div class="grid"><!-- 4 张方向卡片，推荐卡片加 data-rec 与「推荐」徽标 --></div>
+  <div class="grid"><!-- 6 张方向卡片，推荐卡片加 data-rec 与「推荐」徽标 --></div>
   <div class="confirm" id="confirm" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <div class="dialog">
       <h2 id="confirmTitle">确认设计方向</h2>
@@ -252,7 +251,7 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
   }
   function openConfirm(i, name){
     document.querySelectorAll('.card').forEach((c,idx)=>c.classList.toggle('selected', idx===i));
-    const id = 'ABCD'[i];
+    const id = 'ABCDEF'[i];
     pending = {id, name, label:'选 ' + id + '：' + name};
     const values = dials();
     document.getElementById('confirmMeta').textContent =
@@ -274,7 +273,7 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
     if (!result.ok && navigator.clipboard) navigator.clipboard.writeText(msg).catch(()=>{});
   }
   document.addEventListener('keydown', e=>{
-    const i = ['1','2','3','4'].indexOf(e.key);
+    const i = ['1','2','3','4','5','6'].indexOf(e.key);
     if(i>-1){ const c=document.querySelectorAll('.card')[i]; if(c) c.click(); }
   });
   document.getElementById('cancelPick').onclick = () => document.getElementById('confirm').classList.remove('open');
@@ -286,7 +285,7 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 
 ## 选择协议
 
-1. 对话侧输出必须包含：4 方向一句话摘要 + **"推荐 X，因为〈理由〉"** +
+1. 对话侧输出必须包含：6 方向一句话摘要 + **"推荐 X，因为〈理由〉"** +
    本地预览 URL + 预览目录 + `index.html` 路径
 2. 三拨盘必须在预览页里可拖动；确认选择时随方向一起回传
 3. 用户点击方向后必须进入确认弹层，可补充调整建议；确认后才写入 `selection.json`
@@ -294,12 +293,26 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 5. 用户未选时不得自动推进；只有用户明确说"你定/按推荐继续"才可按推荐方向进入 Phase 3
 6. 推荐方向的选择标准：最贴合设计读取与受众，而非最炫
 
+### 推荐评分维度
+
+「推荐 X」必须按以下维度比较后给出；可以一句话概括，但内部至少逐项标记强/中/弱：
+
+1. 任务契合：是否让核心任务更快、更清楚。
+2. 三秒理解：用户能否在 3 秒内看懂页面是什么、下一步做什么。
+3. 品牌/系统一致：是否尊重现有品牌、组件库和内容事实。
+4. 辨识度：是否有可记忆的签名动作，而非模板换色。
+5. 无障碍：对比度、字号、焦点、动效降级和窄屏可读性是否成立。
+6. 实现风险：资产、动效、性能和响应式成本是否可控。
+7. 参考契合：若使用外援，核心价值是否确实转译自参考，而非表面贴皮。
+
+评分只用于解释推荐，不是授权。除非用户确认或明确授权默认方向，不得因评分最高直接进入 Phase 3。
+
 ## 交付话术
 
 生成后对用户说（示例）：
-"四个方向的可视化预览已生成并打开：`http://127.0.0.1:{port}/`
+"六个方向的可视化预览已生成并打开：`http://127.0.0.1:{port}/`
 （文件夹：`design-previews/YYYY-MM-DD-任务名/`，入口：`index.html`）。
-点选任一方向（或按 1-4）后会回传，
+点选任一方向（或按 1-6）后会回传，
 页面会让你确认方向、调整三拨盘，也可以写一句混搭建议——比如「要 B 的字体 + C 的配色」。
 我的推荐是 X：〈一句理由〉。如果你直接说「你定」，我才按 X 继续。"
 
@@ -310,6 +323,6 @@ node ~/.agents/skills/qiaomu-design/scripts/qiaomu-design-preview-server.mjs \
 
 若本地服务启动失败，才用降级话术：
 
-"四个方向的可视化预览已生成：`design-previews/YYYY-MM-DD-任务名/index.html`，
+"六个方向的可视化预览已生成：`design-previews/YYYY-MM-DD-任务名/index.html`，
 但本地回传服务未启动（原因：...）。请打开文件后把页面复制的「选 X」发回来；
 当前点选不会自动回传。"

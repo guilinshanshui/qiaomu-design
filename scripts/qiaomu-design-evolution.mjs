@@ -3,6 +3,7 @@
 import {appendFile, mkdir, readFile, access} from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
 
 const LEVELS = new Set(['硬禁令', '强偏好', '情境规则']);
 const EVENT_TYPES = new Set(['correction', 'preference', 'approval', 'defect', 'validation']);
@@ -23,7 +24,8 @@ function has(name) {
 }
 
 function rootDir() {
-  return path.resolve(arg('root', path.resolve(new URL('.', import.meta.url).pathname, '..')));
+  const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+  return path.resolve(arg('root', path.resolve(scriptDir, '..')));
 }
 
 function evolutionDir(root = rootDir()) {

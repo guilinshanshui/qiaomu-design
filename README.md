@@ -2,7 +2,7 @@
 
 **中文** | [English](#english)
 
-> 让 AI 做出“不像默认 AI 模板”的设计：先看四个真实方向，再把选定界面实现并验收到可交付。
+> 让 AI 做出“不像默认 AI 模板”的设计：先看 A–F 六个真实方向，再把选定界面实现并验收到可交付。
 >
 > An opinionated Agent Skill for visual direction, implementation, and browser-based UI verification.
 
@@ -48,7 +48,7 @@
 
 ## 这是什么
 
-一个把设计发散、方向选择、实现和视觉验收串成闭环的 Agent Skill。安装后，当你说"帮我设计 / 重新设计 / 优化界面"时，它会先诊断真实需求，再用**可视化风格试衣间**给你 4 个方向实际看着选，确认后由当前 Codex 修改真实文件并按工程验收标准交付——而不是直接吐一个紫渐变居中 Hero 的"AI 味"页面。
+一个把设计发散、方向选择、实现和视觉验收串成闭环的 Agent Skill。安装后，当你说"帮我设计 / 重新设计 / 优化界面"时，它会先诊断真实需求，再用**可视化风格试衣间**给你 A–F 六个方向实际看着选，确认后由当前 Codex 修改真实文件并按工程验收标准交付——而不是直接吐一个紫渐变居中 Hero 的"AI 味"页面。
 
 ## 为什么值得用
 
@@ -60,14 +60,14 @@
 |---|---|
 | 执行者显式路由 | 默认当前 Codex 直接实现；只有用户在当前任务点名 K3 才调用，并保留隔离、diff 审查和独立验收 |
 | 创意提示词编排 | 用独立创意种子、雄心命题、用户反应 brief、新上下文截图批评和删减通道，把 Discover → Define → Deliver 变成可执行流程 |
-| 风格试衣间 | 4 个互斥方向的真实迷你 mockup，生成在 `design-previews/YYYY-MM-DD-任务名/index.html`，点选/键盘进入确认弹层，带拨盘与建议一起回传 |
+| 风格试衣间 | A–F 六个互斥方向的真实迷你 mockup，桌面 `3×2`、移动端单列，生成在 `design-previews/YYYY-MM-DD-任务名/index.html`，点选/键盘 `1–6` 进入确认弹层，带拨盘与建议一起回传 |
 | 设计读取 + 三拨盘 | 按任务类型自适应冒险度/动效/密度：功能页收敛、开放命题放开 |
-| AI 反套路禁令 | 禁 AI 紫渐变、禁 Inter、禁斜体、禁居中套路、禁 AI 文案词——从源头消灭"AI 味" |
+| AI 反套路禁令 | 禁 AI 紫渐变、禁拉丁展示字体的偷懒默认值、禁斜体、禁居中套路、禁 AI 文案词——从源头消灭"AI 味" |
 | 中文排版规范 | 系统字体栈优先、装饰中文字体子集化、盘古之白、行高/字重/标点纪律 |
 | Emil 动效工艺套件 | `emil-design-eng` + `review-animations` + `animation-vocabulary` + `apple-design`：写动效、审动效、命名动效、做流体手势 |
 | 工程验收清单 | Vercel 规范：a11y、表单、焦点陷阱、危险操作防护，`file:line` 格式审查 |
 | Carbon 决策体系 | 基于官方 319 页索引，整合基础 token、组件选型、完整工作流、数据可视化与无障碍；借方法，不复制 IBM 外观 |
-| 58 站设计系统库 | Stripe/Linear/Apple 等真实网站 DESIGN.md（Google Stitch 格式），可直接"参考 XX 做" |
+| 设计参考库 | 正式唯一参考 116 = 本地 58 站真实品牌/产品 DNA + VibeUI 58 条独有通用风格/结构参考；VibeUI 另保留 112 条设计和 166 个预览的完整离线镜像，其中 54 条重叠只作视觉补充、不重复计数 |
 | 打磨模式 | 已有页面不推倒重来：Audit/Critique/Polish/Animate/Harden/Live 六动作 |
 | 交付门禁 | preflight 强制检查清单，任何一条不过就不交付 |
 | 自进化机制 | 用户反馈自动抽象成规则写入偏好账本，越用越贴合你 |
@@ -113,7 +113,7 @@ python3 /path/to/qiaomu-meta-skill/scripts/validate_skill.py ~/.agents/skills/qi
 
 ## 你可以直接这样说
 
-- “帮我重新设计这个产品首页，先给四个能直接看的方向。”
+- “帮我重新设计这个产品首页，先给六个能直接看的方向。”
 - “打磨这个已经能用的页面，去掉 AI 味但别推倒重来。”
 - “审查这个仪表盘的信息层级、状态和移动端问题，先不要改。”
 - “参考 Linear 的克制感，给我的开发者工具做一套设计系统。”
@@ -129,7 +129,7 @@ python3 /path/to/qiaomu-meta-skill/scripts/validate_skill.py ~/.agents/skills/qi
 你：帮我重新设计博客首页
  ↓ Phase 1  诊断：设计读取 + 三拨盘 + 2-3 个关键问题
  ↓ Phase 2  风格试衣间：生成 design-previews/YYYY-MM-DD-任务名/index.html
-            4 个方向实际看着选，确认后把方向、拨盘和建议回传
+            A–F 六个方向实际看着选，确认后把方向、拨盘和建议回传
  ↓ Phase 3  执行：先立 DESIGN.md 锚 → 写码 → preflight 门禁 → 交付
 ```
 
@@ -141,7 +141,7 @@ python3 /path/to/qiaomu-meta-skill/scripts/validate_skill.py ~/.agents/skills/qi
 SKILL.md                       人格 + 工作流 + 拨盘 + 反套路禁令 + 自进化协议
 references/
   user-preferences.md          用户偏好账本（自进化写入，最高优先级）
-  style-preview.md             风格试衣间规范（4 方向 + 手动确认回传）
+  style-preview.md             风格试衣间规范（A–F 六方向 + 手动确认回传）
   divergence-playbook.md       发散手册（轴级差异检验 + 14 种美学方向）
   creative-prompting.md        创意提示词编排（种子 / brief / 独立批评 / 媒体 / 删减）
   motion-craft.md              动效工艺（Emil Kowalski 体系）
@@ -156,7 +156,13 @@ references/
   carbon-source-map.md         319 页 sitemap + 321 MDX 覆盖与刷新方法
   chinese-typography.md        中文排版与配色（W3C clreq / Ant Design / Apple HIG）
   preflight.md                 交付前门禁
+  design-systems-catalog.md    本地 58 站品牌 DNA / DESIGN.md 快速索引
+  vibeui-design-index.md       VibeUI 58 条正式唯一通用参考 + 54 条重叠补充
+  vibeui-design-index.json     带文件尺寸与 SHA-256 的机器可读清单
+  vibeui-mirror/               112 条设计、166 个预览及运行时的完整物理镜像
   design-systems/{58 站}/      DESIGN.md 设计系统参考库
+scripts/
+  qiaomu-vibeui-sync.mjs       重建 VibeUI 离线镜像；--check 纯离线校验
 ```
 
 ## 实测验证
@@ -182,6 +188,7 @@ K3 或其他模型调用都需要当前任务的明确需求或授权。API key 
 - 本 skill 只做设计，不会默认给生成页面注入打赏、公众号、GitHub/X 浮条或乔木个人 Profile；
   对外页面如需署名，建议只放低干扰页脚 `Powered by 向阳乔木` 链接到 `https://qiaomu.ai/`
 - 58 站 DESIGN.md 库来自公开网站的设计系统提炼，用于风格参考，不代表对应公司背书
+- VibeUI 只同步其 UI 设计区并完整镜像运行依赖，不包含 Skill、图片生成或其他非 UI 榜单；来源与版权归原项目及各自权利人，参考不代表品牌背书
 - 装饰性中文字体默认禁用（体积 5-20MB），只在创意标题场景子集化加载——这是特性不是缺陷
 
 ## Troubleshooting
@@ -189,14 +196,14 @@ K3 或其他模型调用都需要当前任务的明确需求或授权。API key 
 | 问题 | 常见原因 | 解决 |
 |---|---|---|
 | `No valid skills found` | `SKILL.md` 未安装到客户端扫描路径或 frontmatter 损坏 | 先运行 `npx skills add ... --list`，再确认安装目录里存在根级 `SKILL.md` |
-| 预览页能打开但选择没有回传 | 用 `file://` 打开，或本地服务已退出 | 用 `qiaomu-design-preview-server.mjs --file <index.html> --exit-on-select` 重启；静态模式则回到对话回复 A/B/C/D |
+| 预览页能打开但选择没有回传 | 用 `file://` 打开，或本地服务已退出 | 用 `qiaomu-design-preview-server.mjs --file <index.html> --exit-on-select` 重启；静态模式则回到对话回复 A–F |
 | 页面出现重复“选择方向”按钮 | 旧预览 HTML 与服务注入协议冲突 | 更新到最新版，确认每个方向只有一个 `.qmdp-pick-button`，删除旧 `selection.json` 后重开 |
 | 中文字体加载慢或排版跳动 | 引入了完整 CJK Webfont | 正文改用系统中文字体栈；装饰标题只请求实际字符子集 |
-| 触发后意外调用外部模型 | 旧版偏好或本地规则仍要求 K3 | 更新到 v3.9.0；默认当前代理执行，只有当前任务明确点名 K3 才调用 |
+| 触发后意外调用外部模型 | 旧版偏好或本地规则仍要求 K3 | 更新到 v3.12.0；默认当前代理执行，只有当前任务明确点名 K3 才调用 |
 
 ## 来源与致谢
 
-MIT License。融合机制来源（详见 SKILL.md 血统说明）：[anthropics/skills](https://github.com/anthropics/skills) · [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) · [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · [emilkowalski/skills](https://github.com/emilkowalski/skills) · [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · [pbakaus/impeccable](https://github.com/pbakaus/impeccable) · [arvindrk/extract-design-system](https://github.com/arvindrk/extract-design-system) · [mattpocock/skills](https://github.com/mattpocock/skills) · [IBM Carbon Design System](https://carbondesignsystem.com/)（官方站点与 Apache-2.0 `carbon-website` 文档的重写摘要） · DESIGN.md 库基于 [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)（Google Stitch 格式）
+MIT License。融合机制来源（详见 SKILL.md 血统说明）：[anthropics/skills](https://github.com/anthropics/skills) · [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) · [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) · [emilkowalski/skills](https://github.com/emilkowalski/skills) · [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) · [pbakaus/impeccable](https://github.com/pbakaus/impeccable) · [arvindrk/extract-design-system](https://github.com/arvindrk/extract-design-system) · [mattpocock/skills](https://github.com/mattpocock/skills) · [IBM Carbon Design System](https://carbondesignsystem.com/)（官方站点与 Apache-2.0 `carbon-website` 文档的重写摘要） · DESIGN.md 库基于 [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)（Google Stitch 格式） · UI 离线镜像基于 [VibeUI](https://vibeui.top/) 的 UI 设计区
 
 <!-- qiaomu-profile:start -->
 ## 关于向阳乔木
@@ -238,17 +245,17 @@ MIT License。Copyright (c) 向阳乔木。
 npx skills add joeseesun/qiaomu-design
 ```
 
-Then ask your Agent-Skills-compatible client: `redesign my landing page and show four visual directions first`.
+Then ask your Agent-Skills-compatible client: `redesign my landing page and show six visual directions first`.
 
 ## What you get
 
 - **Explicit executor routing**: the current agent implements by default. K3 or any other external model is used only when the user explicitly requests it in the current task.
-- **Style fitting room**: 4 mutually-divergent direction mockups (real fonts/colors/layout) in `design-previews/YYYY-MM-DD-task/index.html`. Pick by click or keys, confirm with dial values and optional notes, then the local preview server reports the selection back to the current workflow.
+- **Style fitting room**: six mutually-divergent A–F direction mockups (real fonts/colors/layout) in a desktop 3×2, mobile single-column preview at `design-previews/YYYY-MM-DD-task/index.html`. Pick by click or keys 1–6, confirm with dial values and optional notes, then the local preview server reports the selection back to the current workflow.
 - **Design read + three dials**: VARIANCE / MOTION / DENSITY auto-tuned per task type — restrained on functional UI, bold on open creative briefs.
-- **Anti-slop bans**: no AI-purple gradients, no Inter, no italics, no centered-hero clichés, no "revolutionary/seamless" copy.
+- **Anti-slop bans**: no AI-purple gradients, no lazy Latin display-font defaults, no italics, no centered-hero clichés, no "revolutionary/seamless" copy.
 - **Chinese typography rules**: system font stack first, subset decorative CJK webfonts (5-20 MB otherwise), CJK spacing/punctuation/line-height discipline.
 - **Motion craft** (Emil Kowalski system) and **engineering checklist** (Vercel WIG): easing/durations/stagger, a11y, focus traps, destructive-action guards.
-- **58 real-site DESIGN.md library** (Stripe, Linear, Apple…, Google Stitch format) for "make it like X" requests.
+- **Design reference library**: 116 formal unique references = 58 local real-site DESIGN.md files + 58 non-overlapping VibeUI style/structure references. The physical VibeUI mirror still keeps all 112 designs and 166 previews; 54 overlapping entries remain visual-only supplements and are not double-counted.
 - **Polish mode** for existing pages (Audit/Critique/Polish/Animate/Harden/Live) — no rewrites from scratch.
 - **Pre-flight gate**: a hard checklist; nothing ships if any item fails.
 - **Self-evolution**: feedback is recorded as events, abstracted into evidence-backed candidate rules, explicitly approved, published to the preferences ledger, and verified or rolled back when it causes regressions.
