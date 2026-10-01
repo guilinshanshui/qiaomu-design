@@ -1,12 +1,14 @@
-# qiaomu-design · 偏执型设计顾问
+# qiaomu-design · 偏执型设计顾问（VibeUI 离线整合版）
 
-**中文** | [English](#english)
+**中文** | [使用说明](USAGE.md) | [English](#english)
 
 > 让 AI 做出“不像默认 AI 模板”的设计：先看 A–F 六个真实方向，再把选定界面实现并验收到可交付。
 >
 > An opinionated Agent Skill for visual direction, implementation, and browser-based UI verification.
 
-[![Release](https://img.shields.io/github/v/release/joeseesun/qiaomu-design?style=flat-square)](https://github.com/joeseesun/qiaomu-design/releases) [![Last commit](https://img.shields.io/github/last-commit/joeseesun/qiaomu-design?style=flat-square)](https://github.com/joeseesun/qiaomu-design/commits/main) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [更新日志](CHANGELOG.md)
+> **本仓库定位：** 这是 [`guilinshanshui/qiaomu-design`](https://github.com/guilinshanshui/qiaomu-design) 维护的增强 fork。它在原版三阶段设计闭环之上，整合了 VibeUI UI 设计图谱的完整离线镜像；安装后，即使 VibeUI 关站或本机断网，已有设计文档、风格预览、字体和 Tailwind 运行时仍可检索与打开。
+
+[![Release](https://img.shields.io/github/v/release/guilinshanshui/qiaomu-design?style=flat-square)](https://github.com/guilinshanshui/qiaomu-design/releases) [![Last commit](https://img.shields.io/github/last-commit/guilinshanshui/qiaomu-design?style=flat-square)](https://github.com/guilinshanshui/qiaomu-design/commits/main) [![VibeUI: offline mirror](https://img.shields.io/badge/VibeUI-offline%20mirror-2ea44f?style=flat-square)](references/vibeui-mirror/README.md) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) [更新日志](CHANGELOG.md)
 
 **证据边界：** 核心机制来自受控横评与真实项目迭代；仓库案例可复查，但具体项目仍需逐次运行测试、桌面/移动端截图和交互验收。
 
@@ -67,6 +69,7 @@
 | Emil 动效工艺套件 | `emil-design-eng` + `review-animations` + `animation-vocabulary` + `apple-design`：写动效、审动效、命名动效、做流体手势 |
 | 工程验收清单 | Vercel 规范：a11y、表单、焦点陷阱、危险操作防护，`file:line` 格式审查 |
 | Carbon 决策体系 | 基于官方 319 页索引，整合基础 token、组件选型、完整工作流、数据可视化与无障碍；借方法，不复制 IBM 外观 |
+| VibeUI 离线图谱 | 完整保留 112 条设计、166 个预览和 473 个文件；索引、字体、Tailwind 与预览资源全部本地化，VibeUI 关站或断网后仍可使用 |
 | 设计参考库 | 正式唯一参考 116 = 本地 58 站真实品牌/产品 DNA + VibeUI 58 条独有通用风格/结构参考；VibeUI 另保留 112 条设计和 166 个预览的完整离线镜像，其中 54 条重叠只作视觉补充、不重复计数 |
 | 打磨模式 | 已有页面不推倒重来：Audit/Critique/Polish/Animate/Harden/Live 六动作 |
 | 交付门禁 | preflight 强制检查清单，任何一条不过就不交付 |
@@ -75,7 +78,7 @@
 ## 快速开始
 
 ```bash
-npx skills add joeseesun/qiaomu-design
+npx skills add guilinshanshui/qiaomu-design
 ```
 
 然后在支持 Agent Skills 的客户端里直接说：
@@ -88,8 +91,20 @@ npx skills add joeseesun/qiaomu-design
 <summary>手动安装</summary>
 
 ```bash
-git clone https://github.com/joeseesun/qiaomu-design.git
+git clone https://github.com/guilinshanshui/qiaomu-design.git
+
+# Codex
+cp -r qiaomu-design ~/.codex/skills/qiaomu-design
+
+# Claude Code
 cp -r qiaomu-design ~/.claude/skills/qiaomu-design
+```
+
+Windows PowerShell 可使用：
+
+```powershell
+git clone https://github.com/guilinshanshui/qiaomu-design.git
+Copy-Item -Recurse -Force .\qiaomu-design "$env:USERPROFILE\.codex\skills\qiaomu-design"
 ```
 
 手动复制路径因客户端而异；优先使用上方 `npx skills add`。
@@ -106,9 +121,16 @@ cp -r qiaomu-design ~/.claude/skills/qiaomu-design
 安装后验证发现与目录：
 
 ```bash
-npx skills add joeseesun/qiaomu-design --list
+npx skills add guilinshanshui/qiaomu-design --list
 test -f ~/.agents/skills/qiaomu-design/SKILL.md
 python3 /path/to/qiaomu-meta-skill/scripts/validate_skill.py ~/.agents/skills/qiaomu-design
+```
+
+如果是在仓库目录内验证 VibeUI 离线镜像：
+
+```bash
+node scripts/qiaomu-vibeui-sync.mjs --check
+python tests/test_package.py
 ```
 
 ## 你可以直接这样说
@@ -120,6 +142,8 @@ python3 /path/to/qiaomu-meta-skill/scripts/validate_skill.py ~/.agents/skills/qi
 - “用 K3 实现我选中的 B 方向，并由当前代理独立验收。”（只有这类明确点名才调用 K3）
 
 ## 使用方式
+
+完整操作说明见 **[USAGE.md](USAGE.md)**。
 
 **触发词**：重新设计 / redesign / 优化界面 / 设计方案 / UI 审查 / 帮我看看设计 / 参考 XX 的设计 / 给我一个设计系统
 
@@ -134,6 +158,30 @@ python3 /path/to/qiaomu-meta-skill/scripts/validate_skill.py ~/.agents/skills/qi
 ```
 
 **已有页面要优化**：说"帮我打磨这个页面 / 反 AI 味 / 加动效"，走打磨模式，不推倒重来。
+
+## 使用 VibeUI 离线参考
+
+安装完成后不需要打开 VibeUI 网站。当前 skill 会按以下顺序使用参考：
+
+1. 指定真实网站或品牌时，优先检索本地 `references/design-systems/` 的 58 站品牌/产品设计系统。
+2. 本地未命中时，从 `references/vibeui-design-index.md` 检索 58 条 VibeUI 独有通用风格/结构参考。
+3. 需要直接查看样机时，打开 `references/vibeui-mirror/previews/` 下的 HTML；明暗预览、字体和 Tailwind 已全部改为相对路径。
+4. 54 条与本地 58 站重叠的 VibeUI 设计仍保留离线预览，只作为视觉补充，不重复计入正式唯一参考。
+
+维护镜像：
+
+```bash
+# 纯离线校验路径、文件数、尺寸和 SHA-256
+node scripts/qiaomu-vibeui-sync.mjs --check
+
+# 可选：联网检查 VibeUI 上游是否有更新，不修改本地文件
+node scripts/qiaomu-vibeui-sync.mjs --check-upstream
+
+# 可选：确认上游有更新后，重建本地镜像与索引
+node scripts/qiaomu-vibeui-sync.mjs
+```
+
+VibeUI 已经关站、网络不可用或上游请求失败时，不需要执行重建；已安装仓库里的离线内容仍然可用。只有“主动获取未来新增内容”依赖上游可访问。
 
 ## 工作原理
 
@@ -200,6 +248,7 @@ K3 或其他模型调用都需要当前任务的明确需求或授权。API key 
 | 页面出现重复“选择方向”按钮 | 旧预览 HTML 与服务注入协议冲突 | 更新到最新版，确认每个方向只有一个 `.qmdp-pick-button`，删除旧 `selection.json` 后重开 |
 | 中文字体加载慢或排版跳动 | 引入了完整 CJK Webfont | 正文改用系统中文字体栈；装饰标题只请求实际字符子集 |
 | 触发后意外调用外部模型 | 旧版偏好或本地规则仍要求 K3 | 更新到 v3.12.0；默认当前代理执行，只有当前任务明确点名 K3 才调用 |
+| VibeUI 更新检查失败 | VibeUI 已关站、网络受限或上游地址变化 | 这是预期降级：继续使用现有离线镜像，不要删除本地文件；只有需要新内容时才处理上游同步 |
 
 ## 来源与致谢
 
@@ -229,7 +278,7 @@ MIT License。融合机制来源（详见 SKILL.md 血统说明）：[anthropics
 
 MIT License。Copyright (c) 向阳乔木。
 
-项目主页：[qiaomu.ai](https://qiaomu.ai/) · GitHub：[@joeseesun](https://github.com/joeseesun)
+本 fork：[guilinshanshui/qiaomu-design](https://github.com/guilinshanshui/qiaomu-design) · 原项目：[joeseesun/qiaomu-design](https://github.com/joeseesun/qiaomu-design) · 作者主页：[qiaomu.ai](https://qiaomu.ai/)
 
 ---
 
@@ -242,10 +291,12 @@ MIT License。Copyright (c) 向阳乔木。
 ## Install
 
 ```bash
-npx skills add joeseesun/qiaomu-design
+npx skills add guilinshanshui/qiaomu-design
 ```
 
 Then ask your Agent-Skills-compatible client: `redesign my landing page and show six visual directions first`.
+
+This fork also bundles a fully offline VibeUI reference mirror. After installation, the design index, HTML previews, fonts, and Tailwind runtime work without visiting `vibeui.top`; existing content remains available if the site goes offline. Only checking for or fetching future upstream additions requires network access.
 
 ## What you get
 
@@ -256,6 +307,7 @@ Then ask your Agent-Skills-compatible client: `redesign my landing page and show
 - **Chinese typography rules**: system font stack first, subset decorative CJK webfonts (5-20 MB otherwise), CJK spacing/punctuation/line-height discipline.
 - **Motion craft** (Emil Kowalski system) and **engineering checklist** (Vercel WIG): easing/durations/stagger, a11y, focus traps, destructive-action guards.
 - **Design reference library**: 116 formal unique references = 58 local real-site DESIGN.md files + 58 non-overlapping VibeUI style/structure references. The physical VibeUI mirror still keeps all 112 designs and 166 previews; 54 overlapping entries remain visual-only supplements and are not double-counted.
+- **Offline VibeUI mirror**: 112 designs, 166 previews, and 473 mirrored files are stored in the repository with rewritten local asset paths. `node scripts/qiaomu-vibeui-sync.mjs --check` verifies the snapshot without network access.
 - **Polish mode** for existing pages (Audit/Critique/Polish/Animate/Harden/Live) — no rewrites from scratch.
 - **Pre-flight gate**: a hard checklist; nothing ships if any item fails.
 - **Self-evolution**: feedback is recorded as events, abstracted into evidence-backed candidate rules, explicitly approved, published to the preferences ledger, and verified or rolled back when it causes regressions.
@@ -268,4 +320,4 @@ The first controlled comparison covered 6 variants × 7 tasks × 42 generated pa
 
 Requires an Agent-Skills-compatible client. The fitting room is a local HTML preview served by a tiny local callback server; if the server cannot start, it falls back to a static file and asks the user to reply with the selected direction. qiaomu-design does not inject Qiaomu profile widgets into generated pages by default. The DESIGN.md library is distilled from public sites for reference, not endorsement.
 
-MIT © 向阳乔木 · [qiaomu.ai](https://qiaomu.ai/) · [@joeseesun](https://github.com/joeseesun)
+MIT © 向阳乔木 · [Original project](https://github.com/joeseesun/qiaomu-design) · [This fork](https://github.com/guilinshanshui/qiaomu-design) · [qiaomu.ai](https://qiaomu.ai/)
